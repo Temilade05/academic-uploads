@@ -1,3 +1,5 @@
+import dotenv from "dotenv";
+dotenv.config();
 import mongoose, { ConnectOptions } from "mongoose";
 import logger from "./logger";
 import constants from "../utils/constants";
@@ -13,8 +15,6 @@ export default async (): Promise<void> => {
         : (MONGO_URL as string);
     await mongoose.connect(url, {
       useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: false,
       useUnifiedTopology: true,
     } as ConnectOptions);
     logger.info("DB connected successfully");

@@ -1,10 +1,6 @@
 const constants = {
   mongooseModels: {
-    USER: "User",
-    TRANSACTION: "Transaction",
-    SHARE: "Share",
-    LOAN: "Loan",
-    LOAN_PAYMENT: "LoanPayment",
+    COURSE: "Course",
   },
   environments: {
     PRODUCTION: "production",

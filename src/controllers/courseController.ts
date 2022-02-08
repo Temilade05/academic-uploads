@@ -8,16 +8,24 @@ import { PaginatedResult } from "../utils/types";
 import { FilterQuery } from "mongoose";
 
 class CourseController {
-  courseRepository: CourseRepository;
+  courseRepository: CourseRepository; //repository for access to database operations
 
   constructor(courseRepository: CourseRepository) {
     this.courseRepository = courseRepository;
   }
 
+  //creates a course
   createCourse: RequestHandler = async (req, res, next) => {
+    //takes parameters from the request body
     let { code, name, description } = req.body;
+
+    //returns an error if no code is given
     if (!code) return next(new AppError("course code is required", 400));
+
+    //removes all spaces from the code
     code = removeSpaces(code);
+
+    //saves the new course
     const course = await this.courseRepository.create(
       code,
       name || "",
@@ -28,9 +36,14 @@ class CourseController {
   };
 
   getAllCourses: RequestHandler = async (req, res, next) => {
-    let { search, sort, page, limit } = req.query;
+    let {
+      search, // search string
+      sort, // -1 for descending order and 1 for ascending order
+      page, // page of results to show
+      limit, // number of results per page
+    } = req.query;
 
-    const filter: FilterQuery<Course> = {};
+    const filter: FilterQuery<Course> = {}; //filter object for the query
 
     if (search) {
       let regex = new RegExp(`.*${search}.*`, "i");

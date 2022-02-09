@@ -46,7 +46,11 @@ class CourseRepository extends Repository<Course> {
     return course;
   }
 
-  async getMultiple(
+  async findOne(filter: FilterQuery<Course> = {}): Promise<Course | null> {
+    const course = await this.model.findOne(filter);
+    return course;
+  }
+  async find(
     filter: FilterQuery<Course>,
     page: number,
     limit: number,

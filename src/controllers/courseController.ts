@@ -24,15 +24,26 @@ class CourseController {
 
     //removes all spaces from the code
     code = removeSpaces(code);
+    code = (code as string).toUpperCase();
 
-    //saves the new course
-    const course = await this.courseRepository.create(
-      code,
-      name || "",
-      description || ""
-    );
+    try {
+      //saves the new course
+      let course;
+      course = await this.courseRepository.findOne({ code });
 
-    return successResponse(res, 201, "Course created successfully", course);
+      if (course) return next(new AppError("Course already exists", 400));
+
+      course = await this.courseRepository.create(
+        code,
+        name || "",
+        description || ""
+      );
+
+      return successResponse(res, 201, "Course created successfully", course);
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
   };
 
   getAllCourses: RequestHandler = async (req, res, next) => {
@@ -65,13 +76,12 @@ class CourseController {
     _page = Math.max(1, _page);
     _limit = Math.max(10, _limit);
 
-    const data: PaginatedResult<Course> =
-      await this.courseRepository.getMultiple(
-        filter,
-        _page,
-        _limit,
-        parseInt(sort)
-      );
+    const data: PaginatedResult<Course> = await this.courseRepository.find(
+      filter,
+      _page,
+      _limit,
+      parseInt(sort)
+    );
 
     return successResponse(
       res,

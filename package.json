@@ -5,11 +5,12 @@
   "scripts": {
     "build": "rimraf dist && tsc",
     "dev": "npm run build && nodemon",
-    "start": "npm run build && node dist/server.js"
+    "start": "npm run build && node dist/server.js",
+    "test": "npm run build && mocha tests --recursive --timeout 25000 --exit"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx}": [
-      "prettier --write"
+      "prettier --write && npm test"
     ]
   },
   "dependencies": {

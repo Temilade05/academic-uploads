@@ -3,7 +3,7 @@ import { PaginatedResult } from "../utils/types";
 import AppError from "../errors/AppError";
 
 class Repository<T> {
-  model: Model<T>;
+  protected model: Model<T>;
 
   constructor(model: Model<T>) {
     this.model = model;
@@ -15,10 +15,13 @@ class Repository<T> {
     return course;
   }
 
-  async findAndDelete(id: string) {
-    await this.model.deleteMany({ _id: id });
+  async findByIdAndDelete(id: string) {
+    await this.model.findByIdAndDelete(id);
   }
 
+  async findAndDelete(filter: FilterQuery<T>) {
+    await this.model.deleteMany(filter);
+  }
   async findOne(filter: FilterQuery<T> = {}): Promise<T | null> {
     const course = await this.model.findOne(filter);
     return course;

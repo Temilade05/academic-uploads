@@ -3,7 +3,7 @@ import { FilterQuery } from "mongoose";
 import AppError from "../errors/AppError";
 import { Course } from "../models/Course";
 import { PaginatedResult } from "../utils/types";
-import Repository from "./baseRepository";
+import Repository from "./repository";
 
 class CourseRepository extends Repository<Course> {
   async create(

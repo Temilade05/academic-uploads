@@ -6,7 +6,7 @@ import { PaginatedResult } from "../utils/types";
 import { FilterQuery } from "mongoose";
 
 class CourseService {
-  courseRepository: CourseRepository;
+  private courseRepository: CourseRepository;
   constructor(courseRepository: CourseRepository) {
     this.courseRepository = courseRepository;
   }

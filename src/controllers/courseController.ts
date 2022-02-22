@@ -9,7 +9,7 @@ import { FilterQuery } from "mongoose";
 import CourseService from "../services/courseService";
 
 class CourseController {
-  courseService: CourseService; //repository for access to database operations
+  private courseService: CourseService; //repository for access to database operations
 
   constructor(courseService: CourseService) {
     this.courseService = courseService;

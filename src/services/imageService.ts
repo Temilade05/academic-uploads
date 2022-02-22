@@ -5,8 +5,8 @@ import removeSpaces from "../utils/removeSpaces";
 import CourseRepository from "../repositories/courseRepository";
 
 class ImageService {
-  imageRepository: ImageRepository;
-  courseRepository: CourseRepository;
+  private imageRepository: ImageRepository;
+  private courseRepository: CourseRepository;
 
   constructor(
     imageRepository: ImageRepository,

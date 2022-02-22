@@ -7,6 +7,7 @@ import { FilterQuery } from "mongoose";
 
 class CourseService {
   private courseRepository: CourseRepository;
+
   constructor(courseRepository: CourseRepository) {
     this.courseRepository = courseRepository;
   }

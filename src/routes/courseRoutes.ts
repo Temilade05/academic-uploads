@@ -1,11 +1,10 @@
-import CourseRepository from "../repositories/courseRepository";
 import CourseController from "../controllers/courseController";
-import CourseModel from "../models/Course";
 import { Router } from "express";
+import { deleteImageFromCloudinary, upload } from "../utils/cloudinaryUpload";
+import ServiceLocator from "../di/serviceLocator";
 
 const router = Router();
-const courseRepository = new CourseRepository(CourseModel);
-const courseController = new CourseController(courseRepository);
+const courseController = ServiceLocator.courseController;
 
 router.post("/", courseController.createCourse);
 router.get("/", courseController.getAllCourses);

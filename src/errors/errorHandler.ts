@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from "express";
+import { deleteImageFromCloudinary } from "../utils/cloudinaryUpload";
 import logger from "../utils/logger";
 import AppError from "./AppError";
 
@@ -11,7 +12,18 @@ const errorMiddleWare = async (
   res: Response,
   next: NextFunction
 ): Promise<void> => {
-  // if an error occurs, delete uploaded file from aws s3 bucket
+  // if an error occurs, delete uploaded file from cloudinary bucket bucket
+
+  if (req.file) {
+    deleteImageFromCloudinary(req.file.path);
+  }
+
+  if (req.files) {
+    const files = req.files as Express.Multer.File[];
+    for (const file of files) {
+      deleteImageFromCloudinary(file.path);
+    }
+  }
 
   const body: any = {};
   body.status = "error";

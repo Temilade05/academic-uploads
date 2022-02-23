@@ -20,7 +20,7 @@ class CourseRepository extends Repository<Course> {
     return course;
   }
 
-  async findAndUpdate(
+  async findAndUpdateCourse(
     id: string,
     name: string,
     description: string

@@ -1,4 +1,4 @@
-import { Model, FilterQuery } from "mongoose";
+import { Model, FilterQuery, UpdateQuery } from "mongoose";
 import { PaginatedResult } from "../utils/types";
 import AppError from "../errors/AppError";
 
@@ -25,6 +25,11 @@ class Repository<T> {
   async findOne(filter: FilterQuery<T> = {}): Promise<T | null> {
     const course = await this.model.findOne(filter);
     return course;
+  }
+
+  async findAndUpdate(filter: FilterQuery<T>, update: UpdateQuery<T>) {
+    const result = await this.model.updateMany(filter, update);
+    return result;
   }
   async find(
     filter: FilterQuery<T>,

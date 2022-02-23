@@ -24,6 +24,20 @@ class ImageController {
       return next(error);
     }
   };
+
+  updateImages: RequestHandler = async (req, res, next) => {
+    const { session, courseCode, status, ids } = req.body;
+    try {
+      const result = await this.imageService.updateImages(
+        ids,
+        session,
+        courseCode,
+        status
+      );
+    } catch (error) {
+      return next(error);
+    }
+  };
 }
 
 export default ImageController;

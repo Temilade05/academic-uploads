@@ -3,6 +3,11 @@ import { Image } from "../models/Image";
 import AppError from "../errors/AppError";
 import removeSpaces from "../utils/removeSpaces";
 import CourseRepository from "../repositories/courseRepository";
+import isValidSession from "../utils/isValidSession";
+import { FilterQuery, UpdateQuery } from "mongoose";
+import constants from "../utils/constants";
+
+const { PENDING, APPROVED, DISAPPROVED } = constants.imageStatus;
 
 class ImageService {
   private imageRepository: ImageRepository;
@@ -34,6 +39,9 @@ class ImageService {
         404
       );
 
+    if (!isValidSession(session))
+      throw new AppError("Invalid format for session", 400);
+
     const urls: string[] = [];
     for (const file of files) {
       urls.push(file.path);
@@ -45,6 +53,41 @@ class ImageService {
       session
     );
 
+    return result;
+  }
+
+  async updateImages(
+    ids: string[],
+    session: string | undefined,
+    courseCode: string | undefined,
+    status: string | undefined
+  ) {
+    if (!ids) throw new AppError("No images specified for update", 400);
+    const update: UpdateQuery<Image> = {};
+    if (session) {
+      if (!isValidSession(session))
+        throw new AppError("Invalid session provided", 400);
+
+      update.session = session;
+    }
+
+    if (courseCode) {
+      const code = await this.courseRepository.findOne({ code: courseCode });
+      if (!code) throw new AppError("Course code not found", 404);
+
+      update.courseCode = courseCode;
+    }
+
+    if (status) {
+      update.status = status;
+    }
+
+    //check if status is valid.
+    const validIds = new Set([PENDING, APPROVED, DISAPPROVED]);
+    const result = await this.imageRepository.findAndUpdate(
+      { _id: { $in: ids } },
+      update
+    );
     return result;
   }
 }

@@ -37,11 +37,6 @@ class ImageRepository extends Repository<Image> {
     const result = await this.model.create(images);
     return result;
   }
-
-  async updateImages(filter: FilterQuery<Image>, update: UpdateQuery<Image>) {
-    const result = await this.model.updateMany(filter, update);
-    return result;
-  }
 }
 
 export default ImageRepository;

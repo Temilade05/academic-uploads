@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import errorMiddleWare from "./errors/errorHandler";
 import courseRouter from "./routes/courseRoutes";
+import imageRouter from "./routes/imageRoutes";
 import morgan from "morgan";
 
 const app = express();
@@ -21,6 +22,7 @@ app.get("/", (req: Request, res: Response) => {
 
 //add the routers here
 app.use("/course", courseRouter);
+app.use("/image", imageRouter);
 
 app.all("*", (req: Request, res: Response) => {
   res.status(404).json({

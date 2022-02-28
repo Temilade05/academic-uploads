@@ -1,14 +1,17 @@
-import CourseRepository from "../repositories/courseRepository";
+import CourseRepository, {
+  ICourseRepository,
+} from "../repositories/courseRepository";
 import removeSpaces from "../utils/removeSpaces";
 import AppError from "../errors/AppError";
 import { Course } from "../models/Course";
 import { PaginatedResult } from "../utils/types";
 import { FilterQuery } from "mongoose";
+import Repository, { IRepository } from "../repositories/repository";
 
 class CourseService {
-  private courseRepository: CourseRepository;
+  private courseRepository: ICourseRepository;
 
-  constructor(courseRepository: CourseRepository) {
+  constructor(courseRepository: ICourseRepository) {
     this.courseRepository = courseRepository;
   }
 

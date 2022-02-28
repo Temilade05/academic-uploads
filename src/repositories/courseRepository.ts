@@ -3,9 +3,19 @@ import { FilterQuery } from "mongoose";
 import AppError from "../errors/AppError";
 import { Course } from "../models/Course";
 import { PaginatedResult } from "../utils/types";
-import Repository from "./repository";
+import Repository, { IRepository } from "./repository";
 
-class CourseRepository extends Repository<Course> {
+export interface ICourseRepository extends IRepository<Course> {
+  create(code: string, name: string, description: string): Promise<Course>;
+
+  findAndUpdateCourse(
+    id: string,
+    name: string,
+    description: string
+  ): Promise<Course>;
+}
+
+class CourseRepository extends Repository<Course> implements ICourseRepository {
   async create(
     code: string,
     name: string,

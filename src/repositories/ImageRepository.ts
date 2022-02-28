@@ -1,8 +1,22 @@
 import { FilterQuery, UpdateQuery } from "mongoose";
 import { Image } from "../models/Image";
-import Repository from "./repository";
+import Repository, { IRepository } from "./repository";
 
-class ImageRepository extends Repository<Image> {
+export interface IImageRepository extends IRepository<Image> {
+  createImage(
+    url: string,
+    courseCode: string,
+    session: string
+  ): Promise<Image | void>;
+
+  createImages(
+    urls: string[],
+    courseCode: string,
+    session: string
+  ): Promise<Image[]>;
+}
+
+class ImageRepository extends Repository<Image> implements IImageRepository {
   async createImage(
     url: string,
     courseCode: string,

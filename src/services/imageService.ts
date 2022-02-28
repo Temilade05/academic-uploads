@@ -1,21 +1,27 @@
-import ImageRepository from "../repositories/ImageRepository";
+import ImageRepository, {
+  IImageRepository,
+} from "../repositories/ImageRepository";
 import { Image } from "../models/Image";
 import AppError from "../errors/AppError";
 import removeSpaces from "../utils/removeSpaces";
-import CourseRepository from "../repositories/courseRepository";
+import CourseRepository, {
+  ICourseRepository,
+} from "../repositories/courseRepository";
 import isValidSession from "../utils/isValidSession";
 import { FilterQuery, UpdateQuery } from "mongoose";
 import constants from "../utils/constants";
+import { IRepository } from "../repositories/repository";
+import { Course } from "../models/Course";
 
 const { PENDING, APPROVED, DISAPPROVED } = constants.imageStatus;
 
 class ImageService {
-  private imageRepository: ImageRepository;
-  private courseRepository: CourseRepository;
+  private imageRepository: IImageRepository;
+  private courseRepository: ICourseRepository;
 
   constructor(
-    imageRepository: ImageRepository,
-    courseRepository: CourseRepository
+    imageRepository: IImageRepository,
+    courseRepository: ICourseRepository
   ) {
     this.imageRepository = imageRepository;
     this.courseRepository = courseRepository;

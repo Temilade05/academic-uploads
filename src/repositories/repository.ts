@@ -1,8 +1,24 @@
-import { Model, FilterQuery, UpdateQuery } from "mongoose";
+import { Model, FilterQuery, UpdateQuery, UpdateWriteOpResult } from "mongoose";
 import { PaginatedResult } from "../utils/types";
 import AppError from "../errors/AppError";
 
-class Repository<T> {
+export interface IRepository<T> {
+  findById(id: string): Promise<T | null>;
+  findByIdAndDelete(id: string): Promise<void>;
+  findAndDelete(filter: FilterQuery<T>): Promise<void>;
+  findOne(filter: FilterQuery<T>): Promise<T | null>;
+  findAndUpdate(
+    filter: FilterQuery<T>,
+    update: UpdateQuery<T>
+  ): Promise<UpdateWriteOpResult>;
+  find(
+    filter: FilterQuery<T>,
+    page: number,
+    limit: number,
+    sort: any
+  ): Promise<PaginatedResult<T>>;
+}
+class Repository<T> implements IRepository<T> {
   protected model: Model<T>;
 
   constructor(model: Model<T>) {

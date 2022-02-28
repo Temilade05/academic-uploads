@@ -1,12 +1,16 @@
 import chai from "chai";
 import chaiHttp from "chai-http";
+import CourseController from "../../../controllers/courseController";
+import { MockCourseService } from "../../mocks/mockCourseService";
 const { assert } = chai;
+
+const mockCourseService = new MockCourseService();
+const courseController = new CourseController(mockCourseService);
 
 chai.use(chaiHttp);
 
 describe("Get all Courses Unit test", () => {
-  it("Sample test 2", (done) => {
-    assert.equal(1 + 1, 2);
+  it("Should get all courses", (done) => {
     done();
   });
 });

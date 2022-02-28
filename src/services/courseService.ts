@@ -8,7 +8,22 @@ import { PaginatedResult } from "../utils/types";
 import { FilterQuery } from "mongoose";
 import Repository, { IRepository } from "../repositories/repository";
 
-class CourseService {
+export interface ICourseService {
+  createCourse(
+    code: string,
+    name: string | undefined,
+    description: string | undefined
+  ): Promise<Course | void>;
+
+  getAllCourses(
+    page: string | undefined,
+    limit: string | undefined,
+    search: string | undefined,
+    sort: string | undefined
+  ): Promise<PaginatedResult<Course>>;
+}
+
+class CourseService implements ICourseService {
   private courseRepository: ICourseRepository;
 
   constructor(courseRepository: ICourseRepository) {

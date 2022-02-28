@@ -1,11 +1,11 @@
-import ImageService from "../services/imageService";
+import ImageService, { IImageService } from "../services/imageService";
 import { RequestHandler } from "express";
 import successResponse from "../utils/successResponse";
 
 class ImageController {
-  private imageService: ImageService;
+  private imageService: IImageService;
 
-  constructor(imageService: ImageService) {
+  constructor(imageService: IImageService) {
     this.imageService = imageService;
   }
 

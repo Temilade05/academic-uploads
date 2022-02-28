@@ -6,12 +6,12 @@ import successResponse from "../utils/successResponse";
 import removeSpaces from "../utils/removeSpaces";
 import { PaginatedResult } from "../utils/types";
 import { FilterQuery } from "mongoose";
-import CourseService from "../services/courseService";
+import CourseService, { ICourseService } from "../services/courseService";
 
 class CourseController {
-  private courseService: CourseService; //repository for access to database operations
+  private courseService: ICourseService; //repository for access to database operations
 
-  constructor(courseService: CourseService) {
+  constructor(courseService: ICourseService) {
     this.courseService = courseService;
   }
 

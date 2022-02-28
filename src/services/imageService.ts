@@ -8,12 +8,27 @@ import CourseRepository, {
   ICourseRepository,
 } from "../repositories/courseRepository";
 import isValidSession from "../utils/isValidSession";
-import { FilterQuery, UpdateQuery } from "mongoose";
+import { FilterQuery, UpdateQuery, UpdateWriteOpResult } from "mongoose";
 import constants from "../utils/constants";
 import { IRepository } from "../repositories/repository";
 import { Course } from "../models/Course";
 
 const { PENDING, APPROVED, DISAPPROVED } = constants.imageStatus;
+
+export interface IImageService {
+  createImages(
+    files: Express.Multer.File[] | undefined,
+    courseCode: string,
+    session: string
+  ): Promise<Image[]>;
+
+  updateImages(
+    ids: string[],
+    session: string | undefined,
+    courseCode: string | undefined,
+    status: string | undefined
+  ): Promise<UpdateWriteOpResult>;
+}
 
 class ImageService {
   private imageRepository: IImageRepository;

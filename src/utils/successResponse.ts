@@ -7,7 +7,7 @@ const successResponse = (
   message: string,
   data: any
 ) => {
-  res.status(status).json({
+  return res.status(status).json({
     status: "success",
     message,
     data,

@@ -16,7 +16,7 @@ const createCourse: RequestHandler = async (req, res, next) => {
     let course;
     course = await CourseModel.findOne({ code });
 
-    if (course) throw new AppError("Course already exists", 400);
+    if (course) return next(new AppError("Course already exists", 400));
 
     course = await CourseModel.create({
       code,

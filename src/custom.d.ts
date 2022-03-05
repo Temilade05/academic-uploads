@@ -1,11 +1,11 @@
-import { User } from "./models/User";
+import jwt from "jsonwebtoken";
 
 //allows me to user req.user in the requests handlers.
 
 declare global {
   namespace Express {
     export interface Request {
-      user: User;
+      isAuthorized: boolean;
     }
   }
 }
